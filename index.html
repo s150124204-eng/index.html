@@ -1,1 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cute Widget</title>
 
+<style>
+
+:root{
+--pink:#ffb6c9;
+--pink2:#ffdce8;
+--white:rgba(255,255,255,.6);
+--shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+}
+
+body{
+
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:linear-gradient(
+135deg,
+#ffdce7,
+#ffeef4,
+#fff3ce
+);
+
+overflow:hidden;
+}
+
+.widget{
+
+width:1000px;
+height:550px;
+
+border-radius:35px;
+
+backdrop-filter:blur(20px);
+
+background:rgba(255,255,255,.25);
+
+padding:20px;
+
+box-shadow:var(--shadow);
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+gap:20px;
+
+}
+
+.card{
+
+background:var(--white);
+
+border-radius:30px;
+
+padding:20px;
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 4px 15px rgba(0,0,0,.08);
+
+overflow:hidden;
+
+}
+
+.title{
+
+font-weight:700;
+margin-bottom:15px;
+font-size:20px;
+
+color:#6d5061;
+
+}
+
+.clock{
+
+font-size:70px;
+font-weight:700;
+color:#553848;
+
+}
+
+.date{
+
+margin-top:10px;
+color:#7f6573;
+
+}
+
+.weather{
+
+margin-top:30px;
+padding:15px;
+border-radius:20px;
+background:white;
+
+}
+
+.temp{
+
+font-size:45px;
+font-weight:bold;
+}
+
+.spotify{
+
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.album{
+
+width:90px;
+height:90px;
+
+border-radius:20px;
+
+background:#ffc8d8;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:40px;
+
+}
+
+.song{
+
+font-size:18px;
+font-weight:600;
+}
+
+.artist{
+
+margin-top:6px;
+color:gray;
+font-size:13px;
+}
+
+.loginButton{
+
+margin-top:15px;
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:50px;
+
+background:#ff8db5;
+
+color:white;
+
+cursor:pointer;
+font-weight:bold;
+
+}
+
+.calendar{
+
+height:350px;
+overflow:auto;
+}
+
+.event{
+
+background:white;
+padding:12px;
+border-radius:15px;
+margin-bottom:10px;
+}
+
+.time{
+
+font-size:12px;
+color:#ff6c9c;
+font-weight:bold;
+}
+
+.eventTitle{
+
+font-weight:600;
+margin-top:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="widget">
+
+<div class="card">
+
+<div class="title">
+🌸 Daily Widget
+</div>
+
+<div class="clock" id="clock">
+00:00
+</div>
+
+<div class="date" id="date">
+Loading...
+</div>
+
+<div class="weather">
+
+<div class="temp">
+28°
+</div>
+
+<div>
+☀️ Surabaya
+</div>
+
+</div>
+
+</div>
+
+
+<div>
+
+<div class="card" style="margin-bottom:20px">
+
+<div class="title">
+🎵 Spotify
+</div>
+
+<div class="spotify">
+
+<div class="album">
+🎧
+</div>
+
+<div>
+
+<div class="song" id="song">
+Belum terhubung
+</div>
+
+<div class="artist" id="artist">
+Login Spotify dulu
+</div>
+
+<button
+class="loginButton"
+onclick="spotifyLogin()">
+
+Connect Spotify
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="title">
+📅 Google Calendar
+</div>
+
+<div
+class="calendar"
+id="calendar">
+
+<div class="event">
+
+<div class="time">
+09:00
+</div>
+
+<div class="eventTitle">
+Belum ada kalender terhubung
+</div>
+
+</div>
+
+</div>
+
+<button
+class="loginButton"
+onclick="googleLogin()">
+
+Connect Calendar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function updateClock(){
+
+let now=new Date()
+
+let time=now.toLocaleTimeString(
+'id-ID',
+{
+hour:'2-digit',
+minute:'2-digit'
+}
+)
+
+let date=now.toLocaleDateString(
+'id-ID',
+{
+weekday:'long',
+day:'numeric',
+month:'long',
+year:'numeric'
+}
+)
+
+document.getElementById(
+'clock'
+).innerText=time
+
+document.getElementById(
+'date'
+).innerText=date
+
+}
+
+setInterval(
+updateClock,
+1000
+)
+
+updateClock()
+
+
+function spotifyLogin(){
+
+alert(
+"Spotify API belum dipasang.\nNanti akan diarahkan ke login Spotify"
+)
+
+}
+
+
+function googleLogin(){
+
+alert(
+"Google Calendar API belum dipasang.\nNanti akan diarahkan ke login Google"
+)
+
+}
+
+</script>
+
+</body>
+</html>
