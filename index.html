@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cute Widget Dashboard</title>
+<title>Cute Bento Widget</title>
 
-<!-- Font Nunito agar tulisan membulat dan lucu -->
+<!-- Google Font Nunito untuk kesan cute & bulat -->
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
     :root {
-        --pink: #ffb6c9;
-        --pink2: #ffdce8;
         --text-main: #6d5061;
-        --text-sub: #8c6e7f;
-        --bg-card: rgba(255, 255, 255, 0.4);
-        --bg-inner: rgba(255, 255, 255, 0.65);
-        --shadow: 0 15px 35px rgba(255, 150, 180, 0.15);
+        --text-sub: #7f6573;
+        --pink: #ffb6c9;
+        --pink-button: #ff8db5;
+        --white-glass: rgba(255, 255, 255, 0.4);
+        --white-inner: rgba(255, 255, 255, 0.65);
+        --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Nunito', system-ui, sans-serif;
     }
 
     body {
@@ -31,62 +31,61 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        /* Background gradient pastel yang bergerak */
-        background: linear-gradient(-45deg, #ffdce7, #ffeef4, #fff3ce, #e6f2ff);
+        /* Background gradien pastel bergerak lembut */
+        background: linear-gradient(-45deg, #ffdce7, #ffeef4, #fff3ce, #e2f0ff);
         background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
+        animation: gradientMove 12s ease infinite;
         overflow: hidden;
         position: relative;
     }
 
-    @keyframes gradientBG {
+    @keyframes gradientMove {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
 
-    /* Container Utama (Bento Grid) */
+    /* Frame Utama (Bento Grid) */
     .widget {
-        width: 850px; /* Ukuran pas, tidak kebesaran */
+        width: 880px;
         height: 520px;
         border-radius: 40px;
-        background: rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        background: rgba(255,255,255,0.2);
         padding: 25px;
-        box-shadow: var(--shadow);
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border: 2px solid rgba(255,255,255,0.5);
         display: grid;
-        grid-template-columns: 1fr 1.1fr; /* Kolom kanan sedikit lebih lebar */
+        grid-template-columns: 1fr 1fr;
         gap: 25px;
-        z-index: 10;
+        z-index: 5;
         
-        /* Animasi masuk */
+        /* Animasi Pop-in saat halaman dibuka */
         opacity: 0;
-        transform: translateY(20px);
-        animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        transform: translateY(20px) scale(0.98);
+        animation: framePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
     }
 
-    @keyframes popIn {
-        to { opacity: 1; transform: translateY(0); }
+    @keyframes framePop {
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Base Style untuk Card */
+    /* Desain Card */
     .card {
-        background: var(--bg-card);
+        background: var(--white-glass);
         border-radius: 30px;
         padding: 25px;
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.6);
         display: flex;
         flex-direction: column;
+        transition: transform 0.3s ease;
     }
 
     .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(255, 150, 180, 0.2);
+        transform: translateY(-4px);
     }
 
     .title {
@@ -96,7 +95,7 @@
         color: var(--text-main);
     }
 
-    /* --- Daily Widget (Kiri) --- */
+    /* Kiri: Daily Widget */
     .daily-card {
         justify-content: space-between;
     }
@@ -113,179 +112,157 @@
         margin-top: 8px;
         color: var(--text-sub);
         font-weight: 600;
-        font-size: 16px;
     }
 
     .weather {
-        margin-top: auto; /* Mendorong cuaca ke bawah */
-        padding: 20px;
-        border-radius: 25px;
-        background: var(--bg-inner);
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        border: 1px solid rgba(255,255,255,0.8);
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 20px;
+        background: var(--white-inner);
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
     }
 
     .temp {
         font-size: 45px;
         font-weight: 800;
         color: var(--text-main);
-        line-height: 1;
-    }
-    
-    .weather-desc {
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--text-sub);
     }
 
-    /* --- Kolom Kanan (Spotify & Calendar) --- */
-    .right-column {
+    /* Kanan: Group Panel */
+    .right-panel {
         display: flex;
         flex-direction: column;
         gap: 25px;
     }
 
-    /* Spotify */
+    /* Spotify Section */
     .spotify {
         display: flex;
         gap: 20px;
         align-items: center;
-        background: var(--bg-inner);
-        padding: 15px;
-        border-radius: 25px;
     }
 
     .album {
         width: 90px;
         height: 90px;
-        border-radius: 20px;
+        border-radius: 22px;
         background: linear-gradient(135deg, #ffc8d8, #ff9ebc);
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 40px;
-        box-shadow: 0 8px 15px rgba(255, 158, 188, 0.3);
-        animation: float 3s ease-in-out infinite alternate;
+        box-shadow: 0 8px 15px rgba(255, 141, 181, 0.3);
+        /* Animasi headphone melayang */
+        animation: floatHeadphone 3s ease-in-out infinite alternate;
     }
 
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        100% { transform: translateY(-8px); }
+    @keyframes floatHeadphone {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-6px); }
     }
 
     .song {
-        font-size: 18px;
-        font-weight: 800;
+        font-size: 19px;
+        font-weight: 700;
         color: var(--text-main);
     }
 
     .artist {
         margin-top: 4px;
-        color: var(--text-sub);
+        color: gray;
         font-size: 14px;
-        font-weight: 600;
     }
 
-    /* Calendar */
-    .calendar {
+    .loginButton {
+        margin-top: 12px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 50px;
+        background: var(--pink-button);
+        color: white;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        box-shadow: 0 4px 12px rgba(255, 141, 181, 0.4);
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .loginButton:hover {
+        background: #ff6c9c;
+        transform: scale(1.03);
+    }
+
+    /* Calendar Section */
+    .calendar-card {
         flex: 1;
-        overflow: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        justify-content: space-between;
+    }
+
+    .calendar-content {
+        height: 100px;
+        overflow-y: auto;
     }
 
     .event {
-        background: var(--bg-inner);
-        padding: 15px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        transition: background 0.3s;
-    }
-
-    .event:hover {
-        background: white;
+        background: var(--white-inner);
+        padding: 12px 15px;
+        border-radius: 15px;
+        margin-bottom: 5px;
     }
 
     .time {
-        font-size: 13px;
-        background: #ff8db5;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 10px;
+        font-size: 12px;
+        color: #ff6c9c;
         font-weight: 800;
     }
 
     .eventTitle {
-        font-weight: 700;
+        font-weight: 600;
+        margin-top: 3px;
+        font-size: 14px;
         color: var(--text-main);
-        font-size: 15px;
     }
 
-    /* Buttons */
-    .loginButton {
-        margin-top: 12px;
-        padding: 10px 18px;
-        border: none;
-        border-radius: 50px;
-        background: #ff8db5;
-        color: white;
-        cursor: pointer;
-        font-weight: 800;
-        font-size: 13px;
-        box-shadow: 0 5px 15px rgba(255, 141, 181, 0.3);
-        transition: all 0.3s ease;
-    }
-
-    .loginButton:hover {
-        transform: scale(1.05);
-        background: #ff6c9c;
-    }
-
-    .header-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-    .header-flex .title { margin-bottom: 0; }
-    .header-flex .loginButton { margin-top: 0; }
-
-    /* --- ANIMASI PATRICK STAR --- */
+    /* --- DEKORASI ANIMASI PATRICK BERGERAK --- */
     .patrick-container {
         position: absolute;
-        bottom: -20px; /* Sembunyi sedikit di bawah */
-        right: 3%;
-        width: 180px;
-        z-index: 20;
-        pointer-events: none; /* Supaya tidak mengganggu klik */
-        /* Animasi mengambang dan bergoyang */
-        animation: patrickDance 6s ease-in-out infinite;
-        filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
+        bottom: 20px;
+        right: 40px;
+        width: 150px;
+        height: auto;
+        z-index: 10;
+        pointer-events: none; /* Biar tombol di bawahnya tetep bisa diklik */
+        
+        /* Animasi Gabungan: Melompat girang & Bergoyang halus */
+        animation: patrickJump 4s ease-in-out infinite;
+        filter: drop-shadow(0 10px 15px rgba(255, 141, 181, 0.25));
     }
 
-    @keyframes patrickDance {
-        0% { transform: translateY(0) rotate(0deg); }
-        25% { transform: translateY(-15px) rotate(5deg); }
-        50% { transform: translateY(-5px) rotate(-3deg); }
-        75% { transform: translateY(-20px) rotate(4deg); }
-        100% { transform: translateY(0) rotate(0deg); }
+    @keyframes patrickJump {
+        0%, 100% {
+            transform: translateY(0) scale(1) rotate(0deg);
+        }
+        30% {
+            transform: translateY(-25px) scale(1.05) rotate(5deg); /* Melompat naik & miring dikit */
+        }
+        50% {
+            transform: translateY(-10px) scale(0.98) rotate(-3deg);
+        }
+        70% {
+            transform: translateY(-20px) scale(1.02) rotate(3deg);
+        }
     }
 </style>
 </head>
 
 <body>
 
-<!-- Hiasan Patrick Star -->
-<img src="https://upload.wikimedia.org/wikipedia/en/3/33/Patrick_Star.svg" class="patrick-container" alt="Patrick Star">
+<!-- Hiasan Patrick Menggunakan Animasi GIF Transparan yang Bergerak -->
+<img src="https://media.tenor.com/images/3fa85994f71a48698544d6739fe100f9/tenor.gif" class="patrick-container" alt="Patrick Star">
 
 <div class="widget">
 
-    <!-- BAGIAN KIRI: Daily Widget (Sama seperti aslinya) -->
+    <!-- PANEL KIRI: Daily Widget (Sesuai Struktur Asli) -->
     <div class="card daily-card">
         <div>
             <div class="title">🌸 Daily Widget</div>
@@ -295,43 +272,39 @@
 
         <div class="weather">
             <div class="temp">28°</div>
-            <div class="weather-desc">
-                <div>☀️ Cerah</div>
-                <div style="font-size: 14px; opacity: 0.8;">Surabaya</div>
-            </div>
+            <div style="font-weight: 700; color: var(--text-main); margin-top: 5px;">☀️ Surabaya</div>
         </div>
     </div>
 
-
-    <!-- BAGIAN KANAN: Spotify & Calendar -->
-    <div class="right-column">
-
-        <!-- Card Spotify (Sama seperti aslinya) -->
+    <!-- PANEL KANAN: Spotify & Google Calendar -->
+    <div class="right-panel">
+        
+        <!-- Card Spotify (Sesuai Struktur Asli) -->
         <div class="card">
             <div class="title">🎵 Spotify</div>
-            
             <div class="spotify">
                 <div class="album">🎧</div>
                 <div>
                     <div class="song" id="song">Belum terhubung</div>
-                    <div class="artist" id="artist">Login Spotify dulu ya</div>
+                    <div class="artist" id="artist">Login Spotify dulu</div>
                     <button class="loginButton" onclick="spotifyLogin()">Connect Spotify</button>
                 </div>
             </div>
         </div>
 
         <!-- Card Calendar -->
-        <div class="card" style="flex: 1;">
-            <div class="header-flex">
+        <div class="card calendar-card">
+            <div>
                 <div class="title">📅 Google Calendar</div>
-                <button class="loginButton" onclick="googleLogin()">Sync</button>
-            </div>
-            
-            <div class="calendar" id="calendar">
-                <div class="event">
-                    <div class="time">09:00</div>
-                    <div class="eventTitle">Belum ada kalender terhubung</div>
+                <div class="calendar-content" id="calendar">
+                    <div class="event">
+                        <div class="time">09:00</div>
+                        <div class="eventTitle">Belum ada kalender terhubung</div>
+                    </div>
                 </div>
+            </div>
+            <div style="text-align: right;">
+                <button class="loginButton" onclick="googleLogin()">Connect Calendar</button>
             </div>
         </div>
 
@@ -340,15 +313,14 @@
 </div>
 
 <script>
-    // Fungsi Update Jam
+    // Fungsi Jam Realtime
     function updateClock(){
         let now = new Date();
-
-        // Format waktu (mengganti titik dengan titik dua)
+        
         let time = now.toLocaleTimeString('id-ID', {
             hour: '2-digit',
             minute: '2-digit'
-        }).replace('.', ':'); 
+        }).replace('.', ':'); // Mengubah titik bawaan id-ID jadi titik dua (:)
 
         let date = now.toLocaleDateString('id-ID', {
             weekday: 'long',
@@ -364,13 +336,13 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Fungsi Alert
+    // Fungsi Trigger Login
     function spotifyLogin(){
-        alert("✨ Spotify API belum dipasang.\nNanti akan diarahkan ke login Spotify.");
+        alert("Spotify API belum dipasang.\nNanti akan diarahkan ke login Spotify");
     }
 
     function googleLogin(){
-        alert("✨ Google Calendar API belum dipasang.\nNanti akan diarahkan ke login Google.");
+        alert("Google Calendar API belum dipasang.\nNanti akan diarahkan ke login Google");
     }
 </script>
 
